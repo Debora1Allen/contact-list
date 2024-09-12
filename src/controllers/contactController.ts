@@ -20,6 +20,16 @@ export const getAllPersons = async (_req: Request, res: Response): Promise<Respo
   }
 };
 
+export const getPersonById = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const person = await Person.findById(req.params.id);
+      if (!person) return res.status(404).json({ error: 'Person not found' });
+      return res.status(200).json(person);
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to fetch person' });
+    }
+  };
+  
 export const updatePerson = async (req: Request, res: Response): Promise<Response> => {
   try {
     const person = await Person.findByIdAndUpdate(req.params.id, req.body, { new: true });

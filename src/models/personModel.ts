@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IContact {
   type: string;
@@ -10,14 +10,14 @@ export interface IPerson extends Document {
   contacts: IContact[];
 }
 
-const contactSchema = new Schema<IContact>({
+const ContactSchema: Schema = new Schema({
   type: { type: String, required: true },
   value: { type: String, required: true },
 });
 
-const personSchema = new Schema<IPerson>({
+const PersonSchema: Schema = new Schema({
   name: { type: String, required: true },
-  contacts: [contactSchema],
+  contacts: [ContactSchema],
 });
 
-export const Person = model<IPerson>('Person', personSchema);
+export const Person = mongoose.model<IPerson>('Person', PersonSchema);
